@@ -1,0 +1,36 @@
+import chardet
+
+
+def error_reader(file_name: str):
+    encoding = detect_encoding(rf'git-practice\obliger\extra files\{file_name}')
+    print(encoding)
+    with open(rf'git-practice\obliger\extra files\{file_name}', 'r', encoding=encoding, ) as file:
+        text = ''
+        for line in file:
+            if line.startswith('['):
+                text += line
+    file.close()
+    print(text)
+    try:
+        with open('error_log.txt', 'x', encoding='utf-8') as log:
+            log.write(text)
+        log.close()
+    except FileExistsError:
+        with open('error_log.txt', 'a', encoding='utf-8') as log:
+            log.write(text)
+        log.close()
+
+def detect_encoding(file_path: str):
+    with open(file_path, 'rb') as file:
+        detector = chardet.UniversalDetector()
+        for line in file:
+            detector.feed(line)
+            if detector.done:
+                break
+        detector.close()
+    return detector.result['encoding']
+    
+error_reader('log_1.txt')
+error_reader('log_2.txt')
+error_reader('log_3.txt')
+error_reader('log_4.txt')
