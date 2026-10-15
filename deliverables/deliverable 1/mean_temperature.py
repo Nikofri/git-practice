@@ -29,8 +29,6 @@ for i in range(len(data)):
     df_perc2025 = pd.concat([df_perc2025, row.iloc[2].to_frame().T], ignore_index=True)
     #df_perc2025 = pd.concat([df_perc2025, row.iloc[3].to_frame().T], ignore_index=True)
 
-
-
 endpoint = 'https://frost.met.no/observations/v0.jsonld'
 parameters = {
     'sources': 'SN17850',
@@ -49,7 +47,6 @@ for i in range(len(data)):
     row['referenceTime'] = data[i]['referenceTime']
     row['sourceId'] = data[i]['sourceId']
     df_1925 = pd.concat([df_1925, row], ignore_index=True)
-
 
 def printer(data):
     info = {
