@@ -25,9 +25,8 @@ for i in range(len(data)):
     row = pd.DataFrame(data[i]['observations'])
     row['referenceTime'] = data[i]['referenceTime']
     df_temp2025 = pd.concat([df_temp2025, row.iloc[0].to_frame().T], ignore_index=True)
-    #df_temp2025 = pd.concat([df_temp2025, row.iloc[1].to_frame().T], ignore_index=True)
     df_perc2025 = pd.concat([df_perc2025, row.iloc[2].to_frame().T], ignore_index=True)
-    #df_perc2025 = pd.concat([df_perc2025, row.iloc[3].to_frame().T], ignore_index=True)
+
 
 endpoint = 'https://frost.met.no/observations/v0.jsonld'
 parameters = {
