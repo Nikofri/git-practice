@@ -14,21 +14,27 @@ parameters = {
     'referencetime': '2018-01-01/2018-12-31',
 }
 
+
 r = requests.get(endpoint, parameters, auth=(client_id,''))
 json = r.json()
 data = json['data']
 df = pd.DataFrame()
 
+#adds data to dataframe
 for i in range(len(data)):
     row = pd.DataFrame(data[i]['observations'])
     row['referenceTime'] = data[i]['referenceTime']
     df = pd.concat([df, row.iloc[0].to_frame().T], ignore_index=True)
 
 
-def average(data):
+def average(data: pd.DataFrame) -> tuple[list[float], list[str]]:
+    '''
+    Takes a dataframe and finds a 7 day rolling average
+    '''
     averages = []
     dates = []
     current = []
+    #calculates averages and assigns dates
     for i in range(len(data)):
         current.append(data['value'].iloc[i])
         if len(current) == 7:

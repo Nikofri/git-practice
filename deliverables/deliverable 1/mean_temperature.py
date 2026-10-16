@@ -21,6 +21,7 @@ data = json['data']
 df_temp2025 = pd.DataFrame()
 df_perc2025 = pd.DataFrame()
 
+#adds data from 2025 to a dataframe
 for i in range(len(data)):
     row = pd.DataFrame(data[i]['observations'])
     row['referenceTime'] = data[i]['referenceTime']
@@ -39,6 +40,7 @@ r = requests.get(endpoint, parameters, auth=(client_id,''))
 json = r.json()
 data = json['data']
 
+#adds data from 1925 to dataframe
 df_1925 = pd.DataFrame()
 for i in range(len(data)):
     row = pd.DataFrame(data[i]['observations'])
@@ -47,7 +49,11 @@ for i in range(len(data)):
     row['sourceId'] = data[i]['sourceId']
     df_1925 = pd.concat([df_1925, row], ignore_index=True)
 
-def printer(data):
+
+def printer(data: pd.DataFrame) -> None:
+    """
+    Takes info from dataframe and prints it
+    """
     info = {
     'mean':round(data['value'].mean(), 2), 
     'median': round(data['value'].median(), 2), 
